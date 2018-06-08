@@ -137,13 +137,13 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
         state = new State();
         background = (ImageView) findViewById(R.id.background);
-        TextView tv1 = (TextView) findViewById(R.id.textView1);
-        TextView tv2 = (TextView) findViewById(R.id.textView2);
+        
 
         //definition of initial textViews text
 
 
         {{#each displays}}
+        TextView {{name}} = (TextView) findViewById(R.id.textView{{number}});
 
         Typeface custom_font_{{name}} = Typeface.createFromAsset(getAssets(),  "{{font}}");
         {{name}}.setTypeface(custom_font_{{name}});
