@@ -1,3 +1,16 @@
+//TODO
+
+
+//generic State.java
+
+//novo dispositivo redical 7  (demos)
+
+
+
+
+
+
+
 package at.lukle.clickableareas;
 
 import android.graphics.Bitmap;
@@ -32,29 +45,18 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
     ImageView background = null;
 
 
-    int MAX_VOLUME = 230 ;
-    int VOL_BUFFER= 10 ;
-    int MAX_RATE = 200 ;
+    i
+     {{#each gvariables}}
 
-    int PlungerLevel = 0; // upto(MAX_VOLUME)
+     {{type}} {{name}} = {{value}}; 
+     {{/each}}
 
-    // plunger speed
-    int FAST = 10;
-    int SLOW = 1;
+     {{#each gvariables}}
 
-    int DEFAULT_VOLUME_SALINE = 224;
-    int DEFAULT_VOLUME_CONTRAST = 224;
-    int AUTOLOAD_STEP = 6;
-    int PRIME_VOLUME_SALINE = 3;
-    int PRIME_VOLUME_CONTRAST = 1;
+     {{type}} {{name}} = "{{value}}"; 
+     {{/each}}
 
-    float tick_step = 250; // posreal
-    float BTN_ACC_TIMEOUT = 750; // posreal
-    float BTN_MANUAL_TIMEOUT = 3000; //posreal
-    float BTN_AUTO_TIMEOUT = 8000; // posreal
 
-    State state;
-    int step = 5;
 
 
 
@@ -160,6 +162,11 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
 
         //definition of initial background image
+
+
+
+
+
 
         ImageView background1 = (ImageView) findViewById(R.id.background);
         Bitmap bm1 = BitmapFactory.decodeResource(getResources(), R.drawable.all);
