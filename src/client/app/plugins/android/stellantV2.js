@@ -29,6 +29,13 @@ function setAPPName(name){
     appname = name;
 }
 
+function setCanvasScale(scale){
+    canvasScale = scale;
+}
+
+function setOrientation(ori){
+    orientation = ori;
+}
 
 /**
      * @function createGVariable
@@ -235,19 +242,21 @@ const fs  = require('fs');
 const handle = require('handlebars');
 
 const mainActivityInFile = 'MainActivityTemplate.java';
-const mainActivityOutFile = 'Template/app/src/main/java/at/lukle/clickableareas/MainActivity.java';
+const mainActivityOutFile = 'Example/app/src/main/java/at/lukle/clickableareas/MainActivity.java';
 //const mainActivityOutFile = 'MainActivity.java';
 const stateInFile = 'StateTemplate.java';
-const stateOutFile = 'Template/app/src/main/java/at/lukle/clickableareas/State.java';
+const stateOutFile = 'Example/app/src/main/java/at/lukle/clickableareas/State.java';
 //const stateOutFile = 'State.java';
-const xmlOutFile = 'Template/app/src/main/res/layout/activity_main.xml';
+const xmlOutFile = 'Example/app/src/main/res/layout/activity_main.xml';
 //const xmlOutFile = 'activity_main.xml';
 const xmlInFile = 'activity_mainTemplate.xml';
 const stringsInFile = 'stringsTemplate.xml';
-const stringsOutFile = 'Template/app/src/main/res/values/strings.xml';
+const stringsOutFile = 'Example/app/src/main/res/values/strings.xml';
 //const stringsOutFile = 'strings.xml';
 
 var appname = "AppTemplate";
+var canvasScale = 2.7;
+var orientation = 1;
 var buttons = [];
 var displays = [];
 var images = [];
@@ -256,7 +265,7 @@ var gstringvariables = [];
 var functions = [];
 
 
-var device = {appname, gvariables, gstringvariables, functions, buttons, displays, images};
+var device = {appname, canvasScale,orientation,gvariables, gstringvariables, functions, buttons, displays, images};
 var buttons_nr = 1;
 var images_nr = 1;
 var displays_nr = 1;
@@ -265,6 +274,8 @@ var tmp = [];
 
 
 setAPPName("StellantV2");
+setCanvasScale(2.8);
+setOrientation(1);
 
 createGVariable("MAX_VOLUME","int",230);
 createGVariable("VOL_BUFFER","int",10);
