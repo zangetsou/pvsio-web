@@ -1,8 +1,5 @@
 //TODO
 
-
-//generic State.java
-
 //novo dispositivo redical 7  (demos)
 
 
@@ -13,6 +10,7 @@
 
 package at.lukle.clickableareas;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -44,55 +42,45 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
     ImageView background = null;
 
-
-    i
-     {{#each gvariables}}
-
-     {{type}} {{name}} = {{value}}; 
-     {{/each}}
-
-     {{#each gvariables}}
-
-     {{type}} {{name}} = "{{value}}"; 
-     {{/each}}
+    Double canvasScale = {{canvasScale}};
+    int orientation = {{orientation}};
+    
+    State state = null;
+    
 
 
 
+    //variables needed for function below
+    long timestamp1 = 0;
+    long timestamp2 = 0;
+    int isFirstClick=0;
 
-
-    long t11 = 0;
-    long t12 = 0;
-    long press = 0;
-    long release = 0;
-
-    int click=0;
-    int on =0;
-
-
+    //function made to prohibite double tap functionality in order to prevent zoom of images
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        t12 = System.currentTimeMillis();
-        if (click==0 && ev.getAction()==MotionEvent.ACTION_BUTTON_PRESS){
-            t11=t12;
-            click++;
+        timestamp2 = System.currentTimeMillis();
+        if (isFirstClick==0 && ev.getAction()==MotionEvent.ACTION_BUTTON_PRESS){
+            timestamp1=timestamp2;
+            isFirstClick
+            ++;
             return super.dispatchTouchEvent(ev);
         }
         else {
-            if(t12-t11 >250 && ev.getAction()==1){
+            if(timestamp2-timestamp1 >250 && ev.getAction()==1){
 //                Log.e(TAG,"this was a tap!");
-                t11=t12;
+                timestamp1=timestamp2;
                 return super.dispatchTouchEvent(ev);
             }
-            else if(t12-t11 >250 &&  ev.getAction()==0)
+            else if(timestamp2-timestamp1 >250 &&  ev.getAction()==0)
                 return super.dispatchTouchEvent(ev);
             else {
-                Log.e(TAG,"this was a double tap");
+//                Log.e(TAG,"this was a double tap");
                 return true;
             }
         }
     }
 
-
+    
 
     // Listen for touches on your images:
     @Override
@@ -100,26 +88,8 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         switch ((int) item){
 
         {{#each buttons}}
-            case {{nr}}:
+            case {{number}}:
                 {{#if functionName}}state = state.{{functionName}}(state){{/if}};
-                {{#if images}}
-                    ImageView background1 = (ImageView) findViewById(R.id.background);
-                {{#each images}}
-                Bitmap bm{{number}} = BitmapFactory.decodeResource(getResources(), R.drawable.{{name}});
-                {{/each}}
-              
-                ArrayList<Image> a=new ArrayList<Image>();
-              
-                {{#each images}}
-                a.add(new Image(bm{{number}},{{xpos}},{{ypos}}));
-                {{/each}}
-
-               Bitmap result = combineImageIntoOne(a);
-                background1.setImageBitmap(result);
-                background1.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                {{/if}}
-
-
                 break;
         {{/each}}
         }
@@ -139,7 +109,10 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
         state = new State();
         background = (ImageView) findViewById(R.id.background);
-        
+        if(orientation==0)
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        else         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
         //definition of initial textViews text
 
@@ -147,15 +120,22 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         {{#each displays}}
         TextView {{name}} = (TextView) findViewById(R.id.textView{{number}});
 
+        {{#if font}}
         Typeface custom_font_{{name}} = Typeface.createFromAsset(getAssets(),  "{{font}}");
         {{name}}.setTypeface(custom_font_{{name}});
+        {{/if}}
         {{name}}.setText("{{start_text}}");
         {{name}}.setTextColor(Color.parseColor("{{color}}"));
         {{name}}.setTextSize({{textsize}});
-        boolean visible = {{visible}};
-        if(visible) {{name}}.setVisibility(View.VISIBLE);
+        boolean visible{{number}} = {{visible}};
+        if(visible{{number}}) {{name}}.setVisibility(View.VISIBLE);
             else {{name}}.setVisibility(View.INVISIBLE);
+        {{name}}.setTranslationX({{xpos}});
+        {{name}}.setTranslationY({{ypos}});
+        {{name}}.setHeight({{ysize}});
+        {{name}}.setWidth({{xsize}});
         {{/each}}
+
 
 
 
@@ -169,13 +149,9 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
 
         ImageView background1 = (ImageView) findViewById(R.id.background);
-        Bitmap bm1 = BitmapFactory.decodeResource(getResources(), R.drawable.all);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.background);
 
-        ArrayList<Image> a=new ArrayList<Image>();
-        a.add(new Image(bm1,0,0));
-
-        Bitmap result = combineImageIntoOne(a);
-        background1.setImageBitmap(result);
+        background1.setImageBitmap(bm);
         background1.setScaleType(ImageView.ScaleType.CENTER_CROP);
         background1.post(new Runnable() {
             @Override
@@ -191,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
                 a.add(new Image(bm{{number}},{{xpos}},{{ypos}}));
                 {{/each}}
 
-               {{#if images}} Bitmap result = combineImageIntoOne(a);
+               {{#if images}} Bitmap result = combineImageIntoOne(a,background1.getHeight(), background1.getWidth());
                 background1.setImageBitmap(result);
                 background1.setScaleType(ImageView.ScaleType.CENTER_CROP);{{/if}}
 
@@ -216,26 +192,21 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
         {{#each buttons}}
 
 		//{{name}}
-		clickableAreas.add(new ClickableArea({{xpos}}, {{ypos}}, {{xsize}}, {{ysize}},(int) {{nr}}));
+		clickableAreas.add(new ClickableArea({{xpos}}, {{ypos}}, {{xsize}}, {{ysize}},(int) {{number}}));
 		{{/each}}
 
         // Set your clickable areas to the image
             clickableAreasImage.setClickableAreas(clickableAreas);
         }
 
-    private Bitmap combineImageIntoOne(ArrayList<Image> bitmap) {
-        int w = 0, h = 0;
-        for (int i = 0; i < bitmap.size(); i++) {
-            if (i < bitmap.size() - 1) {
-                w = bitmap.get(i).image.getWidth() > bitmap.get(i + 1).image.getWidth() ? bitmap.get(i).image.getWidth() : bitmap.get(i + 1).image.getWidth();
-            }
-            h += bitmap.get(i).image.getHeight();
-        }
-        w=3000;h=4200;
+    private Bitmap combineImageIntoOne(ArrayList<Image> bitmap, int height, int width) {
+        
 
-        Bitmap temp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Double a = width * canvasScale;
+        Double b = height * canvasScale;
+        
+        Bitmap temp = Bitmap.createBitmap(a.intValue(), b.intValue(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(temp);
-        int top = 0;
         for (int i = 0; i < bitmap.size(); i++) {
             canvas.drawBitmap(bitmap.get(i).image, bitmap.get(i).left, bitmap.get(i).top, null);
 
@@ -250,5 +221,8 @@ public class MainActivity extends AppCompatActivity implements OnClickableAreaCl
 
 
     }
+
+
+}
 
 
