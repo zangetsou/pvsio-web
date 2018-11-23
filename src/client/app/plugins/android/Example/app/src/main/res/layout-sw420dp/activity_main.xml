@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        android:baselineAlignBottom="false"
+        android:clickable="false"
+        android:contextClickable="false"
+        android:scaleType="centerCrop" />
+
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-40dp"
+        android:layout_marginLeft="-80dp"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-40dp"
+        android:layout_marginLeft="-80dp"
+        android:text="TextView" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="370dp"
+        android:layout_marginRight="500dp"
+        android:background="@android:color/darker_gray"
+        android:ems="1"
+        android:singleLine="true"
+        android:text="Name"
+        tools:minHeight="0dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="370dp"
+        android:layout_marginRight="500dp"
+        android:background="@android:color/darker_gray"
+        android:ems="1"
+        android:singleLine="true"
+        android:text="Name"
+        tools:minHeight="0dp" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="370dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="650dp"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="370dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="650dp"
+        android:text="Button" />
+
+
+
+</android.support.v4.widget.DrawerLayout>

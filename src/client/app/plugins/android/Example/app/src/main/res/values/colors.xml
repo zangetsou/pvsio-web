@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/pvsio_blue</color>
+    <color name="colorPrimaryDark">@color/dark_blue</color>
+    <color name="colorAccent">@color/pvsio_blue</color>
+    <color name="pvsio_blue">#225f91</color>
+    <color name="dark_blue">#0c3c63</color>
+    <color name="light_blue">#79e0d4</color>
+    <color name="indigo">#4b0082</color>
+    <color name="pink">#ffc0cb</color>
+</resources>
